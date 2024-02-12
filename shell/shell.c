@@ -1,23 +1,17 @@
 #include <stdio.h>
 #include <string.h>
-#include <ctype.h>
 #include <stdlib.h>
-#include <errno.h>
 #include <unistd.h>
 #include <termios.h>
-#include <sys/types.h>
 #include <sys/wait.h>
-#include <stdlib.h>
 #include <fcntl.h>
 #include <signal.h>
 
-#define FALSE 0
-#define TRUE 1
+
 #define INPUT_STRING_SIZE 80
 
-#include "io.h"
-#include "parse.h"
-#include "process.h"
+#include "../io/io.h"
+#include "../parser/parser.h"
 #include "shell.h"
 
 void handle_signals();

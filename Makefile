@@ -1,5 +1,5 @@
-SRCS=main.c shell.c process.c io.c parse.c 
-EXECUTABLES=shell 
+SRCS=./shell/main.c ./shell/shell.c ./io/io.c ./parser/parser.c
+EXECUTABLES=./build/tinyshell
 
 CC=gcc
 CFLAGS=-g -Wall 
@@ -10,6 +10,7 @@ OBJS=$(SRCS:.c=.o)
 all: $(EXECUTABLES)
 
 $(EXECUTABLES): $(OBJS)
+	mkdir build
 	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $@  
 
 .c.o:
@@ -17,3 +18,4 @@ $(EXECUTABLES): $(OBJS)
 
 clean:
 	rm -rf $(EXECUTABLES) $(OBJS)
+	rmdir build

@@ -3,7 +3,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 
-#include "parse.h"
+#include "parser.h"
 
 /*          Get tokens from a line of characters */
 /* Return:  new array of pointers to tokens */
