@@ -13,7 +13,6 @@
  */
 void launch_process(process *p)
 {
-  /** YOUR CODE HERE */
 }
 
 /* Put a process in the foreground. This function assumes that the shell
@@ -23,7 +22,6 @@ void launch_process(process *p)
 void
 put_process_in_foreground (process *p, int cont)
 {
-  /** YOUR CODE HERE */
 }
 
 /* Put a process in the background. If the cont argument is true, send
@@ -31,5 +29,4 @@ put_process_in_foreground (process *p, int cont)
 void
 put_process_in_background (process *p, int cont)
 {
-  /** YOUR CODE HERE */
 }

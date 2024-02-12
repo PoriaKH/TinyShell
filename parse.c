@@ -80,17 +80,3 @@ tok_t *getArguments(tok_t *t){
 
    return result;
 }
-/*
-int isRedirect(tok_t *t){
-   for(int i = 0; i < getSize(t); i++){
-      if(t[i] == '<' || t[i] == '>')
-         return i;
-      }
-
-   return -1;
-}
-int redirectHandle(){
-
-
-}
-*/

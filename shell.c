@@ -126,7 +126,6 @@ void init_shell()
     tcsetpgrp(shell_terminal, shell_pgid);
     tcgetattr(shell_terminal, &shell_tmodes);
   }
-  /** YOUR CODE HERE */
 }
 
 /**
@@ -140,7 +139,6 @@ void add_process(pid_t pid){
   signal_counter++;
   
   tcsetpgrp(shell_terminal, pid);
-  //printf("after tcset : %d\n",pid);
 }
 void remove_process(pid_t pid){
    int arg = -1;
@@ -161,7 +159,6 @@ void remove_process(pid_t pid){
   signal_counter--;
 
   tcsetpgrp(shell_terminal, running_pids[signal_counter - 1]);
-  //printf("after tcset : %d\n",running_pids[signal_counter - 1]);
 }
 
 void show_running (){
@@ -175,7 +172,6 @@ void show_running (){
  */
 process* create_process(char* inputString)
 {
-  /** YOUR CODE HERE */
   return NULL;
 }
 
@@ -183,8 +179,7 @@ process* create_process(char* inputString)
 void findCommand(tok_t *t){
    //handle_signals();
    char* PATH = getenv("PATH");
-   //printf("$PATH = %s\n", PATH);
-   
+
    tok_t *p = getToks(PATH);
    
    for(int i = 0; i < getSize(p); i++){
@@ -235,12 +230,9 @@ void sigcont_func(){
 void sig_handler(int sig){
    switch(sig) {
       case SIGTSTP: //CTRL Z
-        // printf("used CTRL Z\n");
          ctrlz_func();
-         //signal(SIGTSTP,SIG_IGN);
          break;
       case SIGINT:
-           // printf("used CTRL C!\n");
          break;
       case SIGKILL:
          signal(SIGKILL,SIG_DFL);
@@ -255,14 +247,11 @@ void sig_handler(int sig){
       
    }
    
-//   fprintf(stderr, "were in sig_handler\n");
 }
 
 void handle_signals(){
     signal(SIGINT, sig_handler);
     signal(SIGTSTP, sig_handler);
-    //signal(SIGINT, SIG_DFL);
-   // signal(SIGTSTP, SIG_IGN);
 }
 
 int shell (int argc, char *argv[]) {
@@ -277,25 +266,12 @@ int shell (int argc, char *argv[]) {
   init_shell();
    
   shell_pid = getpid();
-  // printf("%s running as PID %d under %d\n",argv[0],pid,ppid);
- // printf("shell pid = %d\n",shell_pid);
   add_process(shell_pid);
 
-  //testing add process
-  /*
-  show_running();
-  add_process(1234);
-  add_process(111);
-  add_process(555);
-  show_running();
-  remove_process(111);
-  show_running();
-  */
    
   lineNum=0;
-  // fprintf(stdout, "%d: ", lineNum);
   handle_signals();
-  printf("mercy$ ");
+  printf("PoriaKH$ ");
   while ((s = freadln(stdin))){
     int andFlag = 0;
     t = getToks(s); /* break the line into tokens */
@@ -330,56 +306,40 @@ int shell (int argc, char *argv[]) {
     else {
       int status;
       pid_t pid;
-      //handle_signals();
       int res = 1;
       
       pid = fork();
-      //add_process(pid);
 
       if(pid == 0){
-         //child
-         //t[0] = path, t[1] = arg
          pid_t child_pid = getpid();
-        // printf("child_pid in child : %d\n",child_pid);
-                
+
          int status2;
          pid_t pid2 = fork();
          
          if(pid2 != 0){//child
             waitpid(pid2,&status2,0);
-            //now execv is finished ?
-            //remove_process(child_pid);
             return 0;
          }
          
-         //printf("fork pid = %d\n",child_pid);
          res = execv(t[0], t);
          if(res == -1){
             findCommand(t);
-            //printf("invalid path\n");
          }
          return 0;
       }
       else{
-         //parrent
          add_process(pid);
-        // show_running();
-        // printf("and flag = %d\n",andFlag); 
          if(andFlag != 1)
             wait(NULL);
          
          remove_process(pid);
-         //printf("removing LIST:\n");
-        // show_running();
       }
       
       redirectIn("/dev/tty");
       redirectOut("/dev/tty");
       
-      //fprintf(stdout, "This shell only supports built-ins. Replace this to run programs as commands.\n");
     }
-    // fprintf(stdout, "%d: ", lineNum);
-    printf("mercy$ ");
+    printf("PoriaKH$ ");
   }
   return 0;
 }
