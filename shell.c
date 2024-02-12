@@ -84,7 +84,7 @@ int cmd_cd(tok_t arg[]){
 
    return 1;
 }
-int cmd_help(tok_t arg[]) {
+int cmd_help(tok_t arg[]) {     // for "?" command
   int i;
   for (i=0; i < (sizeof(cmd_table)/sizeof(fun_desc_t)); i++) {
     printf("%s - %s\n",cmd_table[i].cmd, cmd_table[i].doc);
@@ -133,7 +133,6 @@ void init_shell()
  */
 void add_process(pid_t pid){
   
-  /** YOUR CODE HERE */
   running_pids[count] = pid;
   count++;
   signal_counter++;
@@ -161,7 +160,7 @@ void remove_process(pid_t pid){
   tcsetpgrp(shell_terminal, running_pids[signal_counter - 1]);
 }
 
-void show_running (){
+void show_running (){       //shows running PIDs.
    for(int i = 0; i < count; i++)
       printf("PID = %d\n",running_pids[i]);
    printf("\n");
@@ -170,14 +169,8 @@ void show_running (){
 /**
  * Creates a process given the inputString from stdin
  */
-process* create_process(char* inputString)
-{
-  return NULL;
-}
 
-
-void findCommand(tok_t *t){
-   //handle_signals();
+void findCommand(tok_t *t){     //find command in the system
    char* PATH = getenv("PATH");
 
    tok_t *p = getToks(PATH);
@@ -198,14 +191,14 @@ void findCommand(tok_t *t){
    printf("invalid path\n");
 }
 
-void redirectIn(char *fileName)   //<
+void redirectIn(char *fileName)   //for "<" annotation
 {
     int in = open(fileName, O_RDONLY);
     dup2(in, 0);
     close(in);
 }
 
-void redirectOut(char *fileName)  //>
+void redirectOut(char *fileName)  //for ">" annotation
 {
     int out = open(fileName, O_WRONLY | O_TRUNC | O_CREAT, 0600);
     dup2(out, 1);
@@ -224,10 +217,10 @@ void ctrlz_func(){//CTRL Z Happend
 }
 void sigcont_func(){
    tcsetpgrp(shell_terminal, bg_pids[bg_counter-1]);
-   bg_pids[bg_counter - 1] = NULL;
+   bg_pids[bg_counter - 1] = (pid_t) NULL;
    bg_counter--;
 }
-void sig_handler(int sig){
+void sig_handler(int sig){      // catching signals
    switch(sig) {
       case SIGTSTP: //CTRL Z
          ctrlz_func();
