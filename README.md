@@ -1,7 +1,7 @@
 # TinyShell
 A tiny little shell :)
 
-It searches the given command through the $PATH variable using execv() function and also it supports rediraction ('<' '>').
+It searches the given command through the $PATH variable using execv() function and also it supports rediraction (`<` `>`).
 tinyshell is able to handle signals such as (SIGINT, SIGTSTP, ...).
 and also you can put procceses in background and bring them back to foreground.
 
